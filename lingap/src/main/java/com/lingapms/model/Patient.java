@@ -3,8 +3,7 @@ package com.lingapms.model;
 import com.lingapms.enums.Role;
 
 public class Patient {
-    private String username;
-    private String password;
+    private int id;
     private String firstName;
     private String lastName;
     private int age;
@@ -12,25 +11,12 @@ public class Patient {
     private String phoneNumber;
     private Role role;
 
-    public Patient(String username, String password){
-        this.username = username;
-        this.password = password;
+    public int getId(){
+        return id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public int setId(int id){
+        return this.id = id;
     }
 
     public String getFirstName() {
@@ -84,7 +70,7 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                "username='" + username + '\'' +
+                ", id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
