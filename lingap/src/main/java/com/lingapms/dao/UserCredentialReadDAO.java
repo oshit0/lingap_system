@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import com.lingapms.enums.Role;
 import com.lingapms.model.User;
 
-public class UserReadDAO {
+public class UserCredentialReadDAO {
 
     DbConnection dbConnection;
 
-    public UserReadDAO(DbConnection dbConnection){
+    public UserCredentialReadDAO(DbConnection dbConnection){
         this.dbConnection = dbConnection;
     }
 
@@ -33,7 +33,7 @@ public class UserReadDAO {
             }
         }
         catch(SQLException e){
-            System.out.println("UserReadDAO: fetchUsers() -> " + e);
+            System.out.println("UserCredentialReadDAO: fetchUsers() -> " + e);
         }
         return users;
     }
@@ -54,11 +54,11 @@ public class UserReadDAO {
                 }
             }
             catch(SQLException e){
-                System.out.println("UserReadDAO: searchUser() -> " + e);
+                System.out.println("UserCredentialReadDAO: searchUser() -> " + e);
             }
         }
         catch(SQLException e){
-            System.out.println("UserReadDAO: searchUser() -> " + e);
+            System.out.println("UserCredentialReadDAO: searchUser() -> " + e);
         }
         return user;
     }

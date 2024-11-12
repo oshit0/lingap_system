@@ -11,6 +11,30 @@ public class Patient {
     private String phoneNumber;
     private Role role;
 
+
+    public Patient(){
+
+    }
+
+    public Patient(String firstName, String lastName, int age, String address, String phoneNumber){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        role = Role.PATIENT;
+    }
+
+    public Patient(int id, String firstName, String lastName, int age, String address, String phoneNumber){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        role = Role.PATIENT;
+    }
+
     public int getId(){
         return id;
     }

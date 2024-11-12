@@ -1,18 +1,37 @@
 package com.lingapms.main;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
+import com.lingapms.controller.PatientController;
+import com.lingapms.controller.UserController;
 import com.lingapms.dao.DbConnection;
-import com.lingapms.dao.UserReadDAO;
-import com.lingapms.model.User;
+import com.lingapms.dao.UserCredentialReadDAO;
+import com.lingapms.dao.UserCredentialUpdateDAO;
+import com.lingapms.dao.UserInfoReadDAO;
+import com.lingapms.model.Patient;
+import com.lingapms.service.UserService;
+import com.lingapms.view.UserView;
+import com.lingapms.dao.UserInfoUpdateDAO;
+
 
 public class Main {
     public static void main(String[] args) {
         DbConnection dbConnection = new DbConnection();
-        UserReadDAO readUser = new UserReadDAO(dbConnection);
-        System.out.println(readUser.searchUser("mark123"));
-    }
 
+        UserCredentialReadDAO userCredRead = new UserCredentialReadDAO(dbConnection);
+        UserCredentialUpdateDAO userCredUpdate = new UserCredentialUpdateDAO(dbConnection);
+        UserService service = new UserService(userCredRead, userCredUpdate);
+        UserView view = new UserView();
+
+        UserInfoUpdateDAO userInfoUpd = new UserInfoUpdateDAO(dbConnection);
+        UserInfoReadDAO userInfoRead = new UserInfoReadDAO(dbConnection);
+        PatientController patientController = new PatientController(userInfoUpd);
+
+        UserController cont = new UserController(service, view, userInfoRead, patientController);
+
+        cont.startAuthMenu();
+
+
+
+
+    }
 
 }
