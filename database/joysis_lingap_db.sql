@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 04:08 PM
+-- Generation Time: Nov 13, 2024 at 04:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,50 @@ SET time_zone = "+00:00";
 --
 -- Database: `joysis_lingap_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor_info_tbl`
+--
+
+CREATE TABLE `doctor_info_tbl` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `field` varchar(50) NOT NULL,
+  `schedule_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `doctor_info_tbl`
+--
+
+INSERT INTO `doctor_info_tbl` (`id`, `name`, `field`, `schedule_id`) VALUES
+(1, 'Dr. Justin Zander', 'Cardiologist', 1),
+(2, 'Dr. Althea Bayudan', 'Dermatology', 2),
+(3, 'Dr. John Leonard', 'Orthopedic', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor_schedules_tbl`
+--
+
+CREATE TABLE `doctor_schedules_tbl` (
+  `id` int(11) NOT NULL,
+  `day` varchar(25) NOT NULL,
+  `time` varchar(25) NOT NULL,
+  `slots_remaining` int(11) NOT NULL DEFAULT 3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `doctor_schedules_tbl`
+--
+
+INSERT INTO `doctor_schedules_tbl` (`id`, `day`, `time`, `slots_remaining`) VALUES
+(1, 'Monday', '7:00-12:00', 3),
+(2, 'Tuesday', '7:00-12:00', 3),
+(3, 'Wednesday', '7:00-12:00', 3);
 
 -- --------------------------------------------------------
 
@@ -74,6 +118,19 @@ INSERT INTO `user_info_tbl` (`id`, `first_name`, `last_name`, `age`, `address`, 
 --
 
 --
+-- Indexes for table `doctor_info_tbl`
+--
+ALTER TABLE `doctor_info_tbl`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `doctor_info_tbl_doctor_schedules_tbl` (`schedule_id`);
+
+--
+-- Indexes for table `doctor_schedules_tbl`
+--
+ALTER TABLE `doctor_schedules_tbl`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user_credentials_tbl`
 --
 ALTER TABLE `user_credentials_tbl`
@@ -91,6 +148,18 @@ ALTER TABLE `user_info_tbl`
 --
 
 --
+-- AUTO_INCREMENT for table `doctor_info_tbl`
+--
+ALTER TABLE `doctor_info_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `doctor_schedules_tbl`
+--
+ALTER TABLE `doctor_schedules_tbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `user_credentials_tbl`
 --
 ALTER TABLE `user_credentials_tbl`
@@ -105,6 +174,12 @@ ALTER TABLE `user_info_tbl`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `doctor_info_tbl`
+--
+ALTER TABLE `doctor_info_tbl`
+  ADD CONSTRAINT `doctor_info_tbl_doctor_schedules_tbl` FOREIGN KEY (`schedule_id`) REFERENCES `doctor_schedules_tbl` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_credentials_tbl`
