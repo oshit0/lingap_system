@@ -3,7 +3,6 @@ package com.lingapms.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class UserCredentialDeleteDAO {
 
@@ -13,18 +12,14 @@ public class UserCredentialDeleteDAO {
         this.dbConnection = dbConnection;
     }
     public boolean deleteUserById(int userId) {
-        Scanner s = new Scanner(System.in);
         String query = "DELETE FROM user_credentials_tbl WHERE id = ?";
-        System.out.println("Delete:");
-        int id = s.nextInt();
         try (Connection connection = dbConnection.connect();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, userId);
             int rowsAffected = preparedStatement.executeUpdate();
-            System.out.println("\u001B[31mUser deleted successfully!\u001B[30m");
             return rowsAffected > 0;
         } catch (SQLException e) {
-            System.out.println("UserDeleteDAO: deleteUserById() -> " + e);
+            System.out.println("UserCredentialDeleteDAO: deleteUserById() -> " + e);
             return false;
         }
     }

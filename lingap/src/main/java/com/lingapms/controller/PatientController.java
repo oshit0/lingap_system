@@ -2,24 +2,20 @@ package com.lingapms.controller;
 
 import com.lingapms.dao.UserInfoUpdateDAO;
 import com.lingapms.model.Patient;
+import com.lingapms.view.PatientView;
 
 public class PatientController {
 
-    private UserInfoUpdateDAO userUpd;
+    private UserInfoUpdateDAO userInfoUpd;
+    private PatientView patientView;
 
-    public PatientController(UserInfoUpdateDAO userUpd){
-        this.userUpd = userUpd;
+    public PatientController(UserInfoUpdateDAO userInfoUpd, PatientView patientView){
+        this.userInfoUpd = userInfoUpd;
+        this.patientView = patientView;
     }
 
-    public boolean createPatientInfo(Patient patient){
-        boolean success = userUpd.addUser(patient);
-        if(success){
-            // TODO Move to PatientView
-            System.out.println("Success");
-        }
-        else{
-            System.out.println("Failed");
-        }
-        return success;
+    public int createPatientInfo(){
+        Patient patient = patientView.promptPatientInfo();
+        return userInfoUpd.addUser(patient);
     }
 }

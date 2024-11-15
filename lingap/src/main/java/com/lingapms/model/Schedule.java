@@ -6,6 +6,10 @@ public class Schedule {
     private String time;
     private int slotsRemaining;
 
+    public Schedule(int id){
+        this.id = id;
+    }
+
     public Schedule(int id, String day, String time, int slotsRemaining){
         this.id = id;
         this.day = day;

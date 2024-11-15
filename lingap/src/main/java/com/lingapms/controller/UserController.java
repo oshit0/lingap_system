@@ -1,7 +1,6 @@
 package com.lingapms.controller;
 
 import com.lingapms.dao.UserInfoReadDAO;
-import com.lingapms.model.Patient;
 import com.lingapms.model.User;
 import com.lingapms.service.UserService;
 import com.lingapms.view.UserView;
@@ -11,14 +10,12 @@ public class UserController {
     private UserService userService;
     private UserView userView;
     private PatientController patientController;
-    private UserInfoReadDAO userInfoRead;
     private User user;
     private int userChoice;
 
     public UserController(UserService userService, UserView userView, UserInfoReadDAO userInforead, PatientController patientController) {
         this.userService = userService;
         this.userView = userView;
-        this.userInfoRead = userInforead;
         this.patientController = patientController;
     }
 
@@ -44,19 +41,16 @@ public class UserController {
         User user = null;
         String tmp;
         boolean success = false;
-        Patient patient = userView.promptPatientInfo();
-        while(!patientController.createPatientInfo(patient)){
-            patient = userView.promptPatientInfo();
-        }
         while(true){
             user = userView.promptUserCredentials();
             tmp = userView.promptPassword();
             if(user.getPassword().equals(tmp)) break;
             else userView.displayErrorMessage("Passwords don't match, try again!");
         }
-        success = userService.registerUser(userInfoRead.searchUser(patient).getId(), user.getUsername(), user.getPassword());
+        int userId = patientController.createPatientInfo();
+        success = userService.registerUser(userId, user.getUsername(), user.getPassword());
         if(success){
-            userView.displayUserProfile(user);
+            userView.displayUserProfile(new User(user.getUsername(), userId));
             userView.displaySuccessMessage("Created a new account successfully.");
             return true;
         }

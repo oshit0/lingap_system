@@ -13,6 +13,27 @@ public class DoctorView {
         scn = new Scanner(System.in);
     }
 
+    public boolean promptForConfirmation(String message) {
+        try {
+            System.out.print(message + " (Y/N): ");
+            char choice = scn.next().charAt(0);
+            return choice == 'y' || choice == 'Y';
+        } catch (Exception e) {
+            displayErrorMessage("Invalid confirmation input.");
+            return promptForConfirmation(message);
+        }
+    }
+
+    public void refreshBuffer() {
+        scn.nextLine();
+    }
+
+    public void closeScanner() {
+        if (scn != null) {
+            scn.close();
+        }
+    }
+
     public int promptUserChoice() {
         try {
             System.out.println("=====================================================================================");
@@ -68,54 +89,4 @@ public class DoctorView {
         System.out.println("=====================================================================================");
     }
 
-    public void displayLoginPrompt() {
-        System.out.println("=====================================================================================");
-        System.out.println("\t\tPlease log in.");
-        System.out.println("=====================================================================================");
-    }
-
-    public void displayRegistrationPrompt() {
-        System.out.println("=====================================================================================");
-        System.out.println("\t\tPlease register.");
-        System.out.println("=====================================================================================");
-    }
-
-    public void displayWelcomeMessage() {
-        System.out.println("=====================================================================================");
-        System.out.println("\t\tWelcome back!");
-       System.out.println("=====================================================================================");
-    }
-
-    public void displayInvalidCredentialsMessage() {
-        System.out.println("=====================================================================================");
-        System.out.println("\t\tInvalid username or password.");
-        System.out.println("=====================================================================================");
-    }
-
-    public void displayGoodbyeMessage() {
-        System.out.println("=====================================================================================");
-        System.out.println("Goodbye!");
-        System.out.println("=====================================================================================");
-    }
-
-    public boolean promptForConfirmation(String message) {
-        try {
-            System.out.print(message + " (Y/N): ");
-            char choice = scn.next().charAt(0);
-            return choice == 'y' || choice == 'Y';
-        } catch (Exception e) {
-            displayErrorMessage("Invalid confirmation input.");
-            return promptForConfirmation(message);
-        }
-    }
-
-    public void refreshBuffer() {
-        scn.nextLine();
-    }
-
-    public void closeScanner() {
-        if (scn != null) {
-            scn.close();
-        }
-    }
 }

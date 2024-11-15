@@ -5,15 +5,15 @@ import com.lingapms.controller.PatientController;
 import com.lingapms.controller.UserController;
 import com.lingapms.dao.DbConnection;
 import com.lingapms.dao.DoctorInfoReadDAO;
+import com.lingapms.dao.DoctorInfoUpdateDAO;
 import com.lingapms.dao.UserCredentialReadDAO;
 import com.lingapms.dao.UserCredentialUpdateDAO;
 import com.lingapms.dao.UserInfoReadDAO;
-import com.lingapms.model.Patient;
 import com.lingapms.service.UserService;
 import com.lingapms.view.DoctorView;
+import com.lingapms.view.PatientView;
 import com.lingapms.view.UserView;
 import com.lingapms.dao.UserInfoUpdateDAO;
-
 
 public class Main {
     public static void main(String[] args) {
@@ -26,13 +26,16 @@ public class Main {
 
         UserInfoUpdateDAO userInfoUpd = new UserInfoUpdateDAO(dbConnection);
         UserInfoReadDAO userInfoRead = new UserInfoReadDAO(dbConnection);
-        PatientController patientController = new PatientController(userInfoUpd);
+        PatientView patientView = new PatientView();
+        PatientController patientController = new PatientController(userInfoUpd, patientView);
 
         UserController userCont = new UserController(service, userView, userInfoRead, patientController);
 
         DoctorInfoReadDAO docRead = new DoctorInfoReadDAO(dbConnection);
+        DoctorInfoUpdateDAO docUpd = new DoctorInfoUpdateDAO(dbConnection);
+
         DoctorView docView = new DoctorView();
-        DoctorController docCont = new DoctorController(dbConnection, docRead, docView);
+        DoctorController docCont = new DoctorController(docRead, docView);
 
         userCont.startAuthMenu();
         docCont.startDoctorMenu();

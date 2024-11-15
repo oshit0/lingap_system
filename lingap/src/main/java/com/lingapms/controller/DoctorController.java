@@ -2,20 +2,17 @@ package com.lingapms.controller;
 
 import java.util.ArrayList;
 
-import com.lingapms.dao.DbConnection;
 import com.lingapms.dao.DoctorInfoReadDAO;
 import com.lingapms.model.Doctor;
 import com.lingapms.view.DoctorView;
 
 public class DoctorController {
 
-    private DbConnection dbConnection;
     private DoctorInfoReadDAO doctorRead;
     private DoctorView doctorView;
     private int userChoice;
 
-    public DoctorController(DbConnection dbConnection, DoctorInfoReadDAO doctorRead, DoctorView doctorView){
-        this.dbConnection = dbConnection;
+    public DoctorController(DoctorInfoReadDAO doctorRead, DoctorView doctorView){
         this.doctorRead = doctorRead;
         this.doctorView = doctorView;
     }
