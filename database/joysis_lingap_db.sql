@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2024 at 04:09 PM
+-- Generation Time: Nov 15, 2024 at 04:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,18 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `doctor_info_tbl` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `field` varchar(50) NOT NULL,
-  `schedule_id` int(11) NOT NULL
+  `field` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `doctor_info_tbl`
 --
 
-INSERT INTO `doctor_info_tbl` (`id`, `name`, `field`, `schedule_id`) VALUES
-(1, 'Dr. Justin Zander', 'Cardiologist', 1),
-(2, 'Dr. Althea Bayudan', 'Dermatology', 2),
-(3, 'Dr. John Leonard', 'Orthopedic', 3);
+INSERT INTO `doctor_info_tbl` (`id`, `name`, `field`) VALUES
+(1, 'Dr. Justin Zander', 'Cardiologist'),
+(2, 'Dr. Althea Bayudan', 'Dermatology'),
+(3, 'Dr. John Leonard', 'Orthopedic'),
+(4, 'Dr. Mark Guerrero', 'Opthalmologist');
 
 -- --------------------------------------------------------
 
@@ -51,6 +51,7 @@ INSERT INTO `doctor_info_tbl` (`id`, `name`, `field`, `schedule_id`) VALUES
 
 CREATE TABLE `doctor_schedules_tbl` (
   `id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
   `day` varchar(25) NOT NULL,
   `time` varchar(25) NOT NULL,
   `slots_remaining` int(11) NOT NULL DEFAULT 3
@@ -60,10 +61,10 @@ CREATE TABLE `doctor_schedules_tbl` (
 -- Dumping data for table `doctor_schedules_tbl`
 --
 
-INSERT INTO `doctor_schedules_tbl` (`id`, `day`, `time`, `slots_remaining`) VALUES
-(1, 'Monday', '7:00-12:00', 3),
-(2, 'Tuesday', '7:00-12:00', 3),
-(3, 'Wednesday', '7:00-12:00', 3);
+INSERT INTO `doctor_schedules_tbl` (`id`, `doctor_id`, `day`, `time`, `slots_remaining`) VALUES
+(1, 1, 'Monday', '7:00-12:00', 3),
+(2, 2, 'Tuesday', '7:00-12:00', 3),
+(3, 1, 'Wednesday', '7:00-12:00', 3);
 
 -- --------------------------------------------------------
 
@@ -121,14 +122,14 @@ INSERT INTO `user_info_tbl` (`id`, `first_name`, `last_name`, `age`, `address`, 
 -- Indexes for table `doctor_info_tbl`
 --
 ALTER TABLE `doctor_info_tbl`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `doctor_info_tbl_doctor_schedules_tbl` (`schedule_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `doctor_schedules_tbl`
 --
 ALTER TABLE `doctor_schedules_tbl`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `doctor_schedules_tbl_doctor_info_tbl_fk` (`doctor_id`);
 
 --
 -- Indexes for table `user_credentials_tbl`
@@ -151,7 +152,7 @@ ALTER TABLE `user_info_tbl`
 -- AUTO_INCREMENT for table `doctor_info_tbl`
 --
 ALTER TABLE `doctor_info_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `doctor_schedules_tbl`
@@ -176,10 +177,10 @@ ALTER TABLE `user_info_tbl`
 --
 
 --
--- Constraints for table `doctor_info_tbl`
+-- Constraints for table `doctor_schedules_tbl`
 --
-ALTER TABLE `doctor_info_tbl`
-  ADD CONSTRAINT `doctor_info_tbl_doctor_schedules_tbl` FOREIGN KEY (`schedule_id`) REFERENCES `doctor_schedules_tbl` (`id`) ON UPDATE CASCADE;
+ALTER TABLE `doctor_schedules_tbl`
+  ADD CONSTRAINT `doctor_schedules_tbl_doctor_info_tbl_fk` FOREIGN KEY (`doctor_id`) REFERENCES `doctor_info_tbl` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user_credentials_tbl`
