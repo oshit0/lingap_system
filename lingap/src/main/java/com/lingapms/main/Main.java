@@ -25,7 +25,7 @@ public class Main {
         UserView userView = new UserView();
 
         UserInfoUpdateDAO userInfoUpd = new UserInfoUpdateDAO(dbConnection);
-        UserInfoReadDAO userInfoRead = new UserInfoReadDAO(dbConnection);
+        UserInfoReadDAO userInfoRead = new  UserInfoReadDAO(dbConnection);
         PatientView patientView = new PatientView();
         PatientController patientController = new PatientController(userInfoUpd, patientView);
 
@@ -39,5 +39,6 @@ public class Main {
 
         userCont.startAuthMenu();
         docCont.startDoctorMenu();
+
     }
 }

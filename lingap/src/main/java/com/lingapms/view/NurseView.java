@@ -4,36 +4,11 @@ import com.lingapms.model.User;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserView {
+public class NurseView {
     Scanner scn;
 
-    public UserView() {
+    public NurseView() {
         scn = new Scanner(System.in);
-    }
-
-    public void printTitle() {
-        System.out.println("( ___ )--------------------------------------------------------------( ___ )");
-        System.out.println(" |   |                                                                |   |");
-        System.out.println(" |   | __        __   _                            _                  |   |");
-        System.out.println(" |   | \\ \\      / /__| | ___ ___  _ __ ___   ___  | |_ ___            |   |");
-        System.out.println(" |   |  \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ | __/ _ \\           |   |");
-        System.out.println(" |   |   \\ V  V /  __/ | (_| (_) | | | | | |  __/ | || (_) |          |   |");
-        System.out.println(" |   |  _ \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/           |   |");
-        System.out.println(" |   | | |   (_)_ __   __ _  __ _ _ __                                |   |");
-        System.out.println(" |   | | |   | | '_ \\ / _` |/ _` | '_ \\                               |   |");
-        System.out.println(" |   | | |___| | | | | (_| | (_| | |_) |                              |   |");
-        System.out.println(" |   | |_____|_|_| |_|\\__, |\\__,_| .__/                          _    |   |");
-        System.out.println(" |   | |  \\/  | __ _ _|___/ __ _ |_| _  ___ _ __ ___   ___ _ __ | |_  |   |");
-        System.out.println(" |   | | |\\/| |/ _` | '_ \\ / _` |/ _` |/ _ \\ '_ ` _ \\ / _ \\ '_ \\| __| |   |");
-        System.out.println(" |   | | |  | | (_| | | | | (_| | (_| |  __/ | | | | |  __/ | | | |_  |   |");
-        System.out.println(" |   | |_|__|_|\\__,_|_| |_|\\__,_|\\__, |\\___|_| |_| |_|\\___|_| |_|\\__| |   |");
-        System.out.println(" |   | / ___| _   _ ___| |_ ___ _|___/__ | |                          |   |");
-        System.out.println(" |   | \\___ \\| | | / __| __/ _ \\ '_ ` _ \\| |                          |   |");
-        System.out.println(" |   |  ___) | |_| \\__ \\ ||  __/ | | | | |_|                          |   |");
-        System.out.println(" |   | |____/ \\__, |___/\\__\\___|_| |_| |_(_)                          |   |");
-        System.out.println(" |   |        |___/                                                   |   |");
-        System.out.println(" |___|                                                                |___|");
-        System.out.println("(_____)--------------------------------------------------------------(_____)");
     }
 
     public void refreshBuffer() {
@@ -58,9 +33,9 @@ public class UserView {
         System.out.println("=====================================================================================");
     }
 
-    public void displayLoginPrompt() {
+    public void displayRegistrationPrompt() {
         System.out.println("=====================================================================================");
-        System.out.println("\t\tPlease log in.");
+        System.out.println("\t\tPlease register.");
         System.out.println("=====================================================================================");
     }
 
@@ -79,9 +54,13 @@ public class UserView {
     public int promptUserChoice() {
         try {
             System.out.println("=====================================================================================");
-            System.out.println("\t1. Login");
-            System.out.println("\t2. Exit");
-            System.out.print("\tChoose an option: ");
+            System.out.println("\t1. Add New Patient");
+            System.out.println("\t2. Edit Patient Info");
+            System.out.println("\t3. Add New Doctor");
+            System.out.println("\t4. Edit Doctor Info");
+            System.out.println("\t5. Add Schedules");
+            System.out.println("\t6. Edit Schedules");
+            System.out.print("\t7. Logout");
             return scn.nextInt();
         } catch (Exception e) {
             displayErrorMessage("Invalid choice input.");
@@ -90,18 +69,6 @@ public class UserView {
         }
 
     }
-
-    public boolean promptForConfirmation(String message) {
-        try {
-            System.out.print(message + " (Y/N): ");
-            char choice = scn.next().charAt(0);
-            return choice == 'y' || choice == 'Y';
-        } catch (Exception e) {
-            displayErrorMessage("Invalid confirmation input.");
-            return promptForConfirmation(message);
-        }
-    }
-
     public String promptUsername() {
         try {
             System.out.print("Enter username: ");
