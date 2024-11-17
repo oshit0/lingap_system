@@ -6,14 +6,14 @@ public class Doctor {
     private String field;
     private Schedule availableSchedule;
 
-    public Doctor(int id, String name, String field, Schedule availableSchedule) {
+    public Doctor(int id, String name, String field) {
         this.id = id;
         this.name = name;
         this.field = field;
-        this.availableSchedule = availableSchedule;
     }
 
-    public Doctor(String name, String field, Schedule availableSchedule) {
+    public Doctor(int id, String name, String field, Schedule availableSchedule) {
+        this.id = id;
         this.name = name;
         this.field = field;
         this.availableSchedule = availableSchedule;

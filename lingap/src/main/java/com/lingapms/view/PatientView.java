@@ -3,13 +3,16 @@ package com.lingapms.view;
 import java.util.Scanner;
 
 import com.lingapms.model.Patient;
+import com.lingapms.service.DateService;
 
 public class PatientView {
 
     private Scanner scn;
+    private DateService dateService;
 
-    public PatientView(){
+    public PatientView(DateService dateService){
         scn = new Scanner(System.in);
+        this.dateService = dateService;
     }
 
     public boolean promptForConfirmation(String message) {
@@ -43,6 +46,28 @@ public class PatientView {
         System.out.println("=====================================================================================");
         System.out.println("\t\tSuccess: " + message);
         System.out.println("=====================================================================================");
+    }
+
+    public int promptUserChoice(Patient patient) {
+        try {
+            System.out.println("\n");
+            System.out.println("╔══════════════════════════════════════════════════════════════════════╗");
+            System.out.printf("║                   Welcome %s %s Today is: %s                     ║\n",
+            patient.getFirstName(), patient.getLastName(), dateService.getFormattedDate());
+            System.out.println("╠══════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                                                      ║");
+            System.out.println("║    1. Login                                                          ║");
+            System.out.println("║    2. Exit                                                           ║");
+            System.out.println("║                                                                      ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════════════╝");
+            System.out.println();
+            System.out.print("* Choose an option: ");
+            return scn.nextInt();
+        } catch (Exception e) {
+            displayErrorMessage("Invalid choice input.");
+            scn.nextLine();
+            return promptUserChoice(patient);
+        }
     }
 
     public String promptFirstName() {

@@ -84,7 +84,10 @@ public class UserController {
             case 1:
                 return login();
             case 2:
-                register();
+                userView.displayGoodbyeMessage();
+                System.exit(0);
+            default:
+                userView.displayErrorMessage("Invalid Input, Try Again.");
         }
         return false;
     }

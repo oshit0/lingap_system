@@ -64,8 +64,8 @@ public class DoctorView {
     public void displayDoctorsList(ArrayList<Doctor> doctors) {
         System.out.println("=====================================================================================");
         doctors.forEach((doctor) -> {
-            System.out.println("Doctor ID: " + doctor.getId() + ", Name: " + doctor.getName() + ", Field: " + doctor.getField());
-            System.out.println("Day: " + doctor.getSchedule().getDay() + ", Time: " + doctor.getSchedule().getTime() + ", Field: " + doctor.getSchedule().getSlotsRemaining());
+            System.out.println("Doctor ID: " + doctor.getSchedule().getDoctorId() + ", Name: " + doctor.getName() + ", Field: " + doctor.getField());
+            System.out.println("Day: " + doctor.getSchedule().getDay() + ", Time: " + doctor.getSchedule().getTime() + ", Slots: " + doctor.getSchedule().getSlotsRemaining());
         });
         System.out.println("=====================================================================================");
     }

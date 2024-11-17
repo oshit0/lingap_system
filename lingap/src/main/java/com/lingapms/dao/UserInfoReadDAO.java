@@ -43,4 +43,31 @@ public class UserInfoReadDAO {
         return patientFound;
     }
 
+    public Patient searchUser(int userId){
+        String query = "SELECT * FROM user_info_tbl WHERE id = ? ? ";
+        Patient patientFound = null;
+        try(Connection connection = dbConnection.connect();
+            PreparedStatement prepareStatement = connection.prepareStatement(query);
+        ){
+            prepareStatement.setInt(1, userId);
+            try(ResultSet resultSet = prepareStatement.executeQuery()){
+                if(resultSet.next()){
+                    patientFound = new Patient(resultSet.getInt("id"),
+                                        resultSet.getString("first_name"),
+                                        resultSet.getString("last_name"),
+                                        resultSet.getInt("age"),
+                                        resultSet.getString("address"),
+                                        resultSet.getString("phone"));
+                }
+            }
+            catch(SQLException e){
+                System.out.println("UserInfoReadDAO: searchUser() -> " + e);
+            }
+        }
+        catch(SQLException e){
+            System.out.println("UserInfoReadDAO: searchUser() -> " + e);
+        }
+        return patientFound;
+    }
+
 }

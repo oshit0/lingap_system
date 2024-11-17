@@ -19,16 +19,16 @@ public class DoctorInfoReadDAO {
     }
 
     public ArrayList<Doctor> fetchDoctors(){
-        String query = "SELECT doctor_info_tbl.id, doctor_info_tbl.name, doctor_info_tbl.field, doctor_info_tbl.schedule_id, doctor_schedules_tbl.day, doctor_schedules_tbl.time, doctor_schedules_tbl.slots_remaining "
-                        + "FROM doctor_info_tbl "
-                        + "INNER JOIN doctor_schedules_tbl ON doctor_info_tbl.schedule_id = doctor_schedules_tbl.id ";
+        String query = "SELECT doctor_info_tbl.id, doctor_info_tbl.name, doctor_info_tbl.field, doctor_schedules_tbl.id, doctor_schedules_tbl.doctor_id, doctor_schedules_tbl.day, doctor_schedules_tbl.time, doctor_schedules_tbl.slots_remaining "
+                        + "FROM doctor_schedules_tbl "
+                        + "INNER JOIN doctor_info_tbl ON doctor_schedules_tbl.doctor_id = doctor_info_tbl.id ";
         ArrayList<Doctor> doctors = new ArrayList<>();
         try (Connection connection = dbConnection.connect();
              Statement statement = connection.prepareStatement(query)) {
             try (ResultSet resultSet = statement.executeQuery(query)) {
                 while (resultSet.next()) {
                     Schedule schedule = new Schedule(
-                        resultSet.getInt("schedule_id"),
+                        resultSet.getInt("doctor_id"),
                         resultSet.getString("day"),
                         resultSet.getString("time"),
                         resultSet.getInt("slots_remaining")
@@ -51,10 +51,7 @@ public class DoctorInfoReadDAO {
     }
 
     public Doctor searchDoctor(String name){
-        String query = "SELECT doctor_info_tbl.id, doctor_info_tbl.name, doctor_info_tbl.field, doctor_info_tbl.schedule_id, doctor_schedules_tbl.day, doctor_schedules_tbl.time, doctor_schedules_tbl.slots_remaining "
-                        + "FROM doctor_info_tbl "
-                        + "INNER JOIN doctor_schedules_tbl ON doctor_info_tbl.schedule_id = doctor_schedules_tbl.id "
-                        + "WHERE doctor_info_tbl.name LIKE ?";
+        String query = "SELECT * FROM doctor_info_tbl WHERE name LIKE ? ";
         name = "%" + name + "%";
         Doctor doctor = null;
         Schedule schedule = null;
@@ -64,14 +61,9 @@ public class DoctorInfoReadDAO {
             prepareStatement.setString(1, name);
             try(ResultSet resultSet = prepareStatement.executeQuery()){
                 while(resultSet.next()){
-                    schedule = new Schedule(resultSet.getInt("schedule_id"),
-                                            resultSet.getString("day"),
-                                            resultSet.getString("time"),
-                                            resultSet.getInt("slots_remaining"));
                     doctor = new Doctor(resultSet.getInt("id"),
                                         resultSet.getString("name"),
-                                        resultSet.getString("field"),
-                                        schedule);
+                                        resultSet.getString("field"));
                 }
             }
             catch(SQLException e){
